@@ -176,5 +176,20 @@ public class ConexionBD {
         }
         
     }
+    
+    public static void eliminarRegistro(){
+        try(
+            Connection conn=DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement stmt =conn.createStatement();
+            ResultSet rs =stmt.executeQuery(QUERY);)
+        {
+                String query="DELETE FROM `videojuegos` WHERE `nombre` = 'Call Of Duty Black Ops 2'";
+                stmt.executeUpdate(query);
+                System.out.println("Libro eliminado");
+            stmt.close();                
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
             
 }
