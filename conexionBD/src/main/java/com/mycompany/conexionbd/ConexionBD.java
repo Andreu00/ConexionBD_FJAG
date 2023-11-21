@@ -202,7 +202,7 @@ public class ConexionBD {
                         eliminado=false;
                     }
                 }
-            conn.close();                
+            stmt.close();                
         }catch(SQLException e){
             e.printStackTrace();
         }
