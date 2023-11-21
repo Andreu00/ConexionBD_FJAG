@@ -17,6 +17,9 @@ public class ConexionBD {
     
     
     public static void main(String[] args) {
+        
+        //METODO PARA BUSCAR JUEGO
+        
         String nombreJuego="";
         Scanner teclado=new Scanner(System.in);
         try(
@@ -24,37 +27,23 @@ public class ConexionBD {
             Statement stmt =conn.createStatement();
             ResultSet rs =stmt.executeQuery(QUERY);)
         {
-            System.out.print("Introduce el nombre de juego: ");
+            /*System.out.print("Introduce el nombre de juego: ");
             nombreJuego=teclado.nextLine();
             boolean retorno=buscaNombre(nombreJuego);
             if(retorno==true){
                 System.out.println(nombreJuego+" existe en la BDD");
             }else{
                 System.out.println("No se ha encontrado este juego");
-            }
-            
-            lanzaConsulta();
-            
-            /*while(rs.next()){
-                System.out.println("ID: "+rs.getInt("id"));
-                System.out.println("Nombre: "+rs.getString("nombre"));
-                System.out.println("Gemero: "+rs.getString("genero"));
-                System.out.println("Fecha de lanzamiento: "+rs.getDate("fechalanzamiento"));
-                System.out.println("Compañia: "+rs.getString("compañia"));
-                System.out.println("Precio: "+rs.getFloat("precio"));
-                System.out.println("\n");
-                              
             }*/
-            
-            //Insertar aqui nuevo juego
-                //String query="INSERT INTO `videojuegos` (`id`, `nombre`, `genero`, `fechalanzamiento`, `compañia`, `precio`) VALUES (NULL, 'Call Of Duty Black Ops 2', 'Gerra', '2023-11-11', 'Activision', '70')";
-                //stmt.executeUpdate(query);
-                //System.out.println("Videjuego añadido");
-                
-            //Eliminar libro
-                //String query="DELETE FROM `videojuegos` WHERE `nombre` = 'Call Of Duty Black Ops 2'";
-                //stmt.executeUpdate(query);
-                //System.out.println("Libro eliminado");
+        
+        //METODO PARA CONSULTA
+            //lanzaConsulta();
+        
+        //METODO PARA NUEVO_REGISTRO_POR_PARAMETRO
+            //nuevoRegistroParametro();
+        
+        //METODO PARA NUEVO_REGISTRO_POR_TECLADO
+            nuevoRegistroTeclado();
                 
             stmt.close();                
         }catch(SQLException e){
@@ -110,6 +99,65 @@ public class ConexionBD {
         }catch(SQLException e){
             e.printStackTrace();
         }
+    }
+    
+    public static void nuevoRegistroParametro(){
+        
+        try(
+            Connection conn=DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement stmt =conn.createStatement();
+            ResultSet rs =stmt.executeQuery(QUERY);)
+        {  
+            String query="INSERT INTO `videojuegos` (`id`, `Nombre`, `Genero`, `FechaLanzamiento`, `Compañia`, `Precio`) VALUES (NULL, 'Call Of Duty Black Ops 2', 'Guerra', '2023-11-11', 'Activision', '70')";
+            stmt.executeUpdate(query);
+            System.out.println("Videjuego añadido");
+                         
+            stmt.close();                
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        
+    }
+    
+    public static void nuevoRegistroTeclado(){
+        String nombre="", genero="",fecha="", compañia="", precio="";
+        Scanner teclado=new Scanner(System.in);
+        try(
+            Connection conn=DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement stmt =conn.createStatement();
+            ResultSet rs =stmt.executeQuery(QUERY);)
+        {  
+            System.out.println("Introduce los datos que te voy a pedir a continuacion:");
+            
+            System.out.print("Nombre: ");
+            nombre=teclado.nextLine();
+            System.out.println("\n");
+            
+            System.out.print("Genero: ");
+            genero=teclado.nextLine();
+            System.out.println("\n");
+            
+            System.out.print("Fecha de Lanzamiento(YYYY-MM-DD): ");
+            fecha=teclado.nextLine();
+            System.out.println("\n");
+            
+            System.out.print("Compañia: ");
+            compañia=teclado.nextLine();
+            System.out.println("\n");
+            
+            System.out.print("Precio: ");
+            precio=teclado.nextLine();
+            System.out.println("\n");
+            
+            String query="INSERT INTO `videojuegos` (`id`, `Nombre`, `Genero`, `FechaLanzamiento`, `Compañia`, `Precio`) VALUES (NULL, '"+nombre+"', '"+genero+"', '"+fecha+"', '"+compañia+"', '"+precio+"')";
+            stmt.executeUpdate(query);
+            System.out.println("Videjuego añadido");
+                         
+            stmt.close();                
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        
     }
             
 }
