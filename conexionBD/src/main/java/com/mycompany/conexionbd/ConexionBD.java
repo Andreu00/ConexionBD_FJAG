@@ -22,28 +22,43 @@ public class ConexionBD {
         
         String nombreJuego="";
         Scanner teclado=new Scanner(System.in);
+        int seleccion="0;
         try(
             Connection conn=DriverManager.getConnection(DB_URL, USER, PASS);
             Statement stmt =conn.createStatement();
             ResultSet rs =stmt.executeQuery(QUERY);)
         {
-            /*System.out.print("Introduce el nombre de juego: ");
-            nombreJuego=teclado.nextLine();
-            boolean retorno=buscaNombre(nombreJuego);
-            if(retorno==true){
-                System.out.println(nombreJuego+" existe en la BDD");
-            }else{
-                System.out.println("No se ha encontrado este juego");
-            }*/
+            System.out.println("Que quieres realizar en la Base de Datos?");
+            System.out.println("1. Buscar Nombre");
+            System.out.println("2. Lanzar Consulta");
+            System.out.println("3. Nuevo registro por parametro");
+            System.out.println("4. Nuevo registro por teclado");
+            System.out.println("5. Eliminar Registro");
+            System.out.print("Introduce la funcion: ");
+            System.out.println("");
+            
+            switch(seleccion){
+                case 1 -> {
+                    System.out.print("Introduce el nombre de juego: ");
+                    nombreJuego=teclado.nextLine();
+                    boolean retorno=buscaNombre(nombreJuego);
+                    if(retorno==true){
+                        System.out.println(nombreJuego+" existe en la BDD");
+                    }else{
+                        System.out.println("No se ha encontrado este juego");
+                    }
+                }
+                
+                case 2 -> lanzaConsulta();
+                
+                case 3 -> nuevoRegistroParametro("Assasins", "Saltos", "2023-02-16", "Ubisoft", "40");
+                
+                case 4 -> nuevoRegistroTeclado();                   
+                
+            }
+            
         
-        //METODO PARA CONSULTA
-            //lanzaConsulta();
         
-        //METODO PARA NUEVO_REGISTRO_POR_PARAMETRO
-            nuevoRegistroParametro("Assasins", "Saltos", "2023-02-16", "Ubisoft", "40");
-        
-        //METODO PARA NUEVO_REGISTRO_POR_TECLADO
-            //nuevoRegistroTeclado();
                 
             stmt.close();                
         }catch(SQLException e){
@@ -92,7 +107,7 @@ public class ConexionBD {
                 System.out.println("Fecha de lanzamiento: "+rs.getDate("FechaLanzamiento"));
                 System.out.println("Compañia: "+rs.getString("Compañia"));
                 System.out.println("Precio: "+rs.getFloat("Precio"));
-                System.out.println("\n");
+                System.out.println("");
                               
             }                
             stmt.close();                
