@@ -40,10 +40,10 @@ public class ConexionBD {
             //lanzaConsulta();
         
         //METODO PARA NUEVO_REGISTRO_POR_PARAMETRO
-            //nuevoRegistroParametro();
+            nuevoRegistroParametro("Assasins", "Saltos", "2023-02-16", "Ubisoft", "40");
         
         //METODO PARA NUEVO_REGISTRO_POR_TECLADO
-            nuevoRegistroTeclado();
+            //nuevoRegistroTeclado();
                 
             stmt.close();                
         }catch(SQLException e){
@@ -101,14 +101,14 @@ public class ConexionBD {
         }
     }
     
-    public static void nuevoRegistroParametro(){
+    public static void nuevoRegistroParametro(String nombre, String genero, String fecha, String compañia, String precio){
         
         try(
             Connection conn=DriverManager.getConnection(DB_URL, USER, PASS);
             Statement stmt =conn.createStatement();
             ResultSet rs =stmt.executeQuery(QUERY);)
         {  
-            String query="INSERT INTO `videojuegos` (`id`, `Nombre`, `Genero`, `FechaLanzamiento`, `Compañia`, `Precio`) VALUES (NULL, 'Call Of Duty Black Ops 2', 'Guerra', '2023-11-11', 'Activision', '70')";
+            String query="INSERT INTO `videojuegos` (`id`, `Nombre`, `Genero`, `FechaLanzamiento`, `Compañia`, `Precio`) VALUES (NULL, '"+nombre+"', '"+genero+"', '"+fecha+"', '"+compañia+"', '"+precio+"')";
             stmt.executeUpdate(query);
             System.out.println("Videjuego añadido");
                          
