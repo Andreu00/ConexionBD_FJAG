@@ -55,13 +55,18 @@ public class ConexionBD {
                 
                 case 3 -> nuevoRegistroParametro("Assasins", "Saltos", "2023-02-16", "Ubisoft", "40");
                 
-                case 4 -> nuevoRegistroTeclado();                   
+                case 4 -> nuevoRegistroTeclado();  
                 
+                case 5 -> {
+                    boolean eliminado=eliminarRegistro("Assasins");
+                    if(eliminado==true){
+                        System.out.println("El juego se ha eliminado correctamente");
+                    }else{
+                        System.out.println("El juego no ha sido eliminado");
+                    }
+                    
+                }
             }
-            
-        
-        
-                
             stmt.close();                
         }catch(SQLException e){
             e.printStackTrace();
@@ -177,19 +182,32 @@ public class ConexionBD {
         
     }
     
-    public static void eliminarRegistro(){
+    public static boolean eliminarRegistro(String nombreV){
+        
+        boolean eliminado=false;
         try(
             Connection conn=DriverManager.getConnection(DB_URL, USER, PASS);
             Statement stmt =conn.createStatement();
             ResultSet rs =stmt.executeQuery(QUERY);)
         {
-                String query="DELETE FROM `videojuegos` WHERE `nombre` = 'Call Of Duty Black Ops 2'";
+                String query="DELETE FROM `videojuegos` WHERE `nombre` = '"+nombreV+"'";
                 stmt.executeUpdate(query);
-                System.out.println("Libro eliminado");
-            stmt.close();                
+                
+                while(rs.next()){
+                    String nombre=rs.getString("Nombre");
+                    if(!nombre.equals(nombreV)){
+                        eliminado=true;
+                        break;                        
+                    }else{
+                        eliminado=false;
+                    }
+                }
+            conn.close();                
         }catch(SQLException e){
             e.printStackTrace();
         }
+        
+        return eliminado;
     }
             
 }
