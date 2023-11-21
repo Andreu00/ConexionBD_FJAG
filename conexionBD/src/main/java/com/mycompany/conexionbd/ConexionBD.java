@@ -26,7 +26,14 @@ public class ConexionBD {
         {
             System.out.print("Introduce el nombre de juego: ");
             nombreJuego=teclado.nextLine();
-            buscaNombre(nombreJuego);
+            boolean retorno=buscaNombre(nombreJuego);
+            if(retorno==true){
+                System.out.println(nombreJuego+" existe en la BDD");
+            }else{
+                System.out.println("No se ha encontrado este juego");
+            }
+            
+            lanzaConsulta();
             
             /*while(rs.next()){
                 System.out.println("ID: "+rs.getInt("id"));
@@ -81,4 +88,28 @@ public class ConexionBD {
         
         return encuentra;
     }
+    
+    public static void lanzaConsulta(){
+        try(
+            Connection conn=DriverManager.getConnection(DB_URL, USER, PASS);
+            Statement stmt =conn.createStatement();
+            ResultSet rs =stmt.executeQuery(QUERY);)
+        {  
+            
+            while(rs.next()){
+                System.out.println("ID: "+rs.getInt("Id"));
+                System.out.println("Nombre: "+rs.getString("Nombre"));
+                System.out.println("Gemero: "+rs.getString("Genero"));
+                System.out.println("Fecha de lanzamiento: "+rs.getDate("FechaLanzamiento"));
+                System.out.println("Compañia: "+rs.getString("Compañia"));
+                System.out.println("Precio: "+rs.getFloat("Precio"));
+                System.out.println("\n");
+                              
+            }                
+            stmt.close();                
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+    }
+            
 }
