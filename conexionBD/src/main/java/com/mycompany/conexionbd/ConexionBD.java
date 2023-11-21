@@ -22,7 +22,8 @@ public class ConexionBD {
         
         String nombreJuego="";
         Scanner teclado=new Scanner(System.in);
-        int seleccion="0;
+        int seleccion=0;
+        
         try(
             Connection conn=DriverManager.getConnection(DB_URL, USER, PASS);
             Statement stmt =conn.createStatement();
@@ -35,6 +36,7 @@ public class ConexionBD {
             System.out.println("4. Nuevo registro por teclado");
             System.out.println("5. Eliminar Registro");
             System.out.print("Introduce la funcion: ");
+            seleccion=teclado.nextInt();
             System.out.println("");
             
             switch(seleccion){
